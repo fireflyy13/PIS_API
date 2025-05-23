@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NASA APOD Viewer</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #000;
+        color: #fff;
+      }
+      img {
+        max-width: 90%;
+        height: auto;
+        border-radius: 10px;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Astronomy Picture of the Day</h1>
+      <p id="date"></p>
+      <h2 id="title"></h2>
+      <img id="apod-image" src="" alt="Astronomy Picture of the Day" />
+      <p id="explanation"></p>
+    </div>
+
+    <script>
+      const apiKey = "DEMO_KEY"; // заміни на свій ключ за бажанням
+      const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("title").textContent = data.title;
+          document.getElementById("date").textContent = `Дата: ${data.date}`;
+          document.getElementById("apod-image").src = data.url;
+          document.getElementById("explanation").textContent = data.explanation;
+        })
+        .catch((error) => {
+          console.error("Помилка:", error);
+          document.body.innerHTML =
+            "<p>Сталася помилка при завантаженні зображення NASA :(</p>";
+        });
+    </script>
+  </body>
+</html>
